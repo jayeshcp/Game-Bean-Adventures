@@ -21,7 +21,10 @@ export default async function splash() {
 
   async function goToGame() {
     await k.wait(0.8);
-    k.go("game");
+    k.go("game", {
+      levelIdx: 0,
+      score: 0,
+    });
   }
 
   k.onClick(async () => {

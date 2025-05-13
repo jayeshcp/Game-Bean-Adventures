@@ -1,6 +1,8 @@
 import k from "./engine.js";
 import game from "./scenes/game.js";
+import lose from "./scenes/lose.js";
 import splash from "./scenes/splash.js";
+import win from "./scenes/win.js";
 
 k.loadSprite("bean", "sprites/bean.png");
 k.loadSprite("coin", "/sprites/coin.png");
@@ -13,5 +15,7 @@ k.loadSound("portal", "/sounds/portal.mp3");
 
 k.scene("splash", splash);
 k.scene("game", game);
+k.scene("win", win);
+k.scene("lose", lose);
 
 k.go("splash");
