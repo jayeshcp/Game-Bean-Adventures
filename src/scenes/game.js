@@ -8,7 +8,8 @@ const SPEED = 480;
 const LEVELS = [
   [
     "@     $ $    $  $     $$     $",
-    "      $             $  $      ",
+    "       ===    =====    ==   ==",
+    "     = $     =       $= $  == ",
     "   ^ $$        ^       $     >",
     "=========   ====== === =  ===="
   ],
@@ -46,11 +47,14 @@ export default async function game({ levelIdx, score }) {
   // Get the player object from tag
   const player = level.get("player")[0];
   player.pos = level.tile2Pos(0, 0);
+  player.onUpdate(() => {
+    k.setCamPos(player.pos);
+  });
 
   // Movements
   k.onKeyPress("space", () => {
     if (player.isGrounded()) {
-      player.jump();
+      player.jump(800);
     }
   });
 
