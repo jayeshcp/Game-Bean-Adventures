@@ -4,9 +4,10 @@ export default async function win({ score}) {
   k.setBackground([40, 60, 40]);
   k.add([
     k.text(`You grabbed ${score} coins!!!`, {
+      size: 56,
       width: k.width(),
     }),
-    k.pos(20, 120),
+    k.pos(40, 120),
   ]);
 
   k.onKeyPress(() => {
