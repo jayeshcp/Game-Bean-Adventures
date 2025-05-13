@@ -4,10 +4,20 @@ setGravity(2400);
 
 const SPEED = 480;
 
-// Design 2 levels
+// Design levels
 const LEVELS = [
-  ["@     $ $", "      $  ", "   ^ $$ >", "========="],
-  ["@   $    ", "    $ $  ", "    $   >", "=   =   ="],
+  [
+    "@     $ $    $  $     $$     $",
+    "      $             $  $      ",
+    "   ^ $$        ^       $     >",
+    "=========   ====== === =  ===="
+  ],
+  [
+    "@   $        ",
+    "    $ $      ",
+    "    $    #  >",
+    "=   =  ==== ="
+  ],
 ];
 
 export default async function game({ levelIdx, score }) {
@@ -20,6 +30,7 @@ export default async function game({ levelIdx, score }) {
     pos: k.vec2(100, 200),
     tiles: {
       "@": () => [k.sprite("bean"), k.area(), k.body(), k.anchor("bot"), "player"],
+      "#": () => [k.sprite("ghosty"), k.scale(0.8), k.area(), k.body({ isStatic: true }), k.anchor("bot"), "danger"],
       "=": () => [
         k.sprite("grass"),
         k.area(),
@@ -34,6 +45,7 @@ export default async function game({ levelIdx, score }) {
 
   // Get the player object from tag
   const player = level.get("player")[0];
+  player.pos = level.tile2Pos(0, 0);
 
   // Movements
   k.onKeyPress("space", () => {
@@ -51,7 +63,6 @@ export default async function game({ levelIdx, score }) {
   });
 
   player.onCollide("danger", () => {
-    player.pos = level.tile2Pos(0, 0);
     // Go to "lose" scene when we hit a "danger"
     k.go("lose");
   });
