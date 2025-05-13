@@ -63,6 +63,7 @@ export default async function game({ levelIdx, score }) {
   });
 
   player.onCollide("danger", () => {
+    k.play("hit");
     // Go to "lose" scene when we hit a "danger"
     k.go("lose");
   });
@@ -77,13 +78,14 @@ export default async function game({ levelIdx, score }) {
   // Fall death
   player.onUpdate(() => {
     if (player.pos.y >= 480) {
+      k.play("hit");
       k.go("lose");
     }
   });
 
   // Enter the next level on portal
   player.onCollide("portal", () => {
-    k.play("portal");
+    k.play("bell");
     if (levelIdx < LEVELS.length - 1) {
       // If there's a next level, go() to the same scene but load the next level
       k.go("game", {

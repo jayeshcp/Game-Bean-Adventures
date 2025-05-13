@@ -10,8 +10,12 @@ k.loadSprite("spike", "/sprites/spike.png");
 k.loadSprite("grass", "/sprites/grass.png");
 k.loadSprite("ghosty", "/sprites/ghosty.png");
 k.loadSprite("portal", "/sprites/portal.png");
+
+k.loadMusic("background", "/sounds/background.mp3");
 k.loadSound("score", "/sounds/score.mp3");
 k.loadSound("portal", "/sounds/portal.mp3");
+k.loadSound("hit", "/sounds/hit.mp3");
+k.loadSound("bell", "/sounds/bell.mp3");
 
 k.scene("splash", splash);
 k.scene("game", game);

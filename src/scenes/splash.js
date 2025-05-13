@@ -21,6 +21,12 @@ export default async function splash() {
 
   async function goToGame() {
     await k.wait(0.8);
+    // Game background music
+    k.play("background", {
+      volume: 0.1,
+      loop: true,
+    });
+
     k.go("game", {
       levelIdx: 0,
       score: 0,
