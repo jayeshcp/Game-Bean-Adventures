@@ -44,11 +44,40 @@ export default async function game({ levelIdx, score }) {
     },
   });
 
+  // Score counter text
+  const scoreLabel = k.add([
+    k.text(`Score: ${score}`, { size: 32 }),
+    k.pos(50, 50),
+    k.layer("ui"),
+    k.fixed()
+  ]);
+
+  let maxScore = k.getData("maxScore", 0);
+  const maxScoreLabel = k.add([
+    k.text(`Max Score: ${maxScore}`, { size: 18 }),
+    k.pos(50, 100),
+    k.layer("ui"),
+    k.fixed()
+  ]);
+
+  function increaseScore(increment = 1) {
+    score += increment;
+    scoreLabel.text = `Score: ${score}`;
+
+    // update max score
+    maxScore = k.getData("maxScore", 0);
+    if (score > maxScore) {
+      maxScore = score;
+      k.setData("maxScore", maxScore);
+      maxScoreLabel.text = `Max Score: ${maxScore}`;
+    }
+  }
+
   // Get the player object from tag
   const player = level.get("player")[0];
   player.pos = level.tile2Pos(0, 0);
   player.onUpdate(() => {
-    k.setCamPos(player.pos);
+     k.setCamPos(player.worldPos());
   });
 
   // Movements
@@ -75,8 +104,7 @@ export default async function game({ levelIdx, score }) {
   player.onCollide("coin", (coin) => {
     k.destroy(coin);
     k.play("score");
-    score++;
-    scoreLabel.text = `Score: ${score}`;
+    increaseScore();
   });
 
   // Fall death
@@ -101,7 +129,4 @@ export default async function game({ levelIdx, score }) {
       k.go("win", { score: score });
     }
   });
-
-  // Score counter text
-  const scoreLabel = k.add([k.text(`Score: ${score}`), k.pos(12)]);
 }

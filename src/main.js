@@ -22,4 +22,6 @@ k.scene("game", game);
 k.scene("win", win);
 k.scene("lose", lose);
 
+k.setLayers(["obj", "ui"], "obj");
+
 k.go("splash");
