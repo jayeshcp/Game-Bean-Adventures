@@ -46,7 +46,7 @@ export default async function game({ levelIdx, score }) {
 
   // Score counter text
   const scoreLabel = k.add([
-    k.text(`Score: ${score}`, { size: 32 }),
+    k.text(`Score: ${score}`, { size: 36 }),
     k.pos(50, 50),
     k.layer("ui"),
     k.fixed()
