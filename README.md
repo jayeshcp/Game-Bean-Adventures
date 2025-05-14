@@ -1,4 +1,8 @@
-# Folder structure
+# Bean Adventures, kaplay.js game
+
+https://kaplayjs.com/
+
+## Folder structure
 
 - `src` - source code for your kaplay project
 - `dist` - distribution folder, contains your index.html, built js bundle and static assets

@@ -1,6 +1,14 @@
 {
 	"name": "bean-adventures",
 	"type": "module",
+	"author": {
+		"name": "Jayesh Choudhary",
+		"email": "jaycp.iitkgp@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jayeshcp/Game-Bean-Adventures"
+	},
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite",
