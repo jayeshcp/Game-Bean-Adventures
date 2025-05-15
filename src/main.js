@@ -25,3 +25,8 @@ k.scene("lose", lose);
 k.setLayers(["obj", "ui"], "obj");
 
 k.go("splash");
+
+// k.go("game", {
+//   levelIdx: 3,
+//   score: 0,
+// });
