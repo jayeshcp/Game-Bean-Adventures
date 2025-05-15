@@ -1,6 +1,12 @@
 import k from "../engine.js";
 
 export default async function win({ score }) {
+  gtag("event", "win", {
+    event_category: "game",
+    event_label: "win",
+    value: score,
+  });
+
   k.setBackground([40, 60, 40]);
   k.add([
     k.text(`You grabbed ${score} coins!!!`, {
