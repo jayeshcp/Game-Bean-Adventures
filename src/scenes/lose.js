@@ -4,7 +4,6 @@ export default async function lose() {
   gtag("event", "lose", {
     event_category: "game",
     event_label: "lose",
-    value: score,
   });
 
   k.setBackground([90, 40, 40]);
