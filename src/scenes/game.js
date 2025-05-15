@@ -1,6 +1,6 @@
 import k from "../engine.js";
 
-setGravity(2400);
+k.setGravity(2400);
 
 const SPEED = 480;
 
