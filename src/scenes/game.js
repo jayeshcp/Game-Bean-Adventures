@@ -84,10 +84,17 @@ export default async function game({ levelIdx, score }) {
 
   const ghosty = level.get("ghosty")[0];
   if (ghosty) {
-    ghosty.waypoints = [
-      k.vec2(ghosty.pos.x - 140, ghosty.pos.y),
-      k.vec2(ghosty.pos.x + 80, ghosty.pos.y),
-    ];
+    if (levelIdx != 3) {
+      ghosty.waypoints = [
+        k.vec2(ghosty.pos.x - 140, ghosty.pos.y),
+        k.vec2(ghosty.pos.x + 80, ghosty.pos.y),
+      ];
+    } else {
+      ghosty.waypoints = [
+        k.vec2(ghosty.pos.x - 240, ghosty.pos.y),
+        k.vec2(ghosty.pos.x + 10, ghosty.pos.y),
+      ];
+    }
   }
 
   // Movements
