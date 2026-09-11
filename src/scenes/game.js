@@ -14,8 +14,26 @@ export default async function game({ levelIdx, score }) {
     tileHeight: 64,
     pos: k.vec2(100, 200),
     tiles: {
-      "@": () => [k.sprite("bean"), k.area(), k.body(), k.anchor("bot"), "player"],
-      "#": () => [k.sprite("ghosty"), k.scale(0.8), k.area(), k.body({ isStatic: true }), k.anchor("bot"), "danger"],
+      "@": () => [
+        k.sprite("bean"),
+        k.area(),
+        k.body(),
+        k.anchor("bot"),
+        "player",
+      ],
+      "#": () => [
+        k.sprite("ghosty"),
+        k.scale(0.8),
+        k.area(),
+        k.body({ isStatic: true }),
+        k.patrol({
+          speed: 120,
+          endBehavior: "loop",
+        }),
+        k.anchor("bot"),
+        "danger",
+        "ghosty",
+      ],
       "=": () => [
         k.sprite("grass"),
         k.area(),
@@ -33,7 +51,7 @@ export default async function game({ levelIdx, score }) {
     k.text(`Score: ${score}`, { size: 36 }),
     k.pos(50, 50),
     k.layer("ui"),
-    k.fixed()
+    k.fixed(),
   ]);
 
   let maxScore = k.getData("maxScore", 0);
@@ -41,7 +59,7 @@ export default async function game({ levelIdx, score }) {
     k.text(`Max Score: ${maxScore}`, { size: 18 }),
     k.pos(50, 100),
     k.layer("ui"),
-    k.fixed()
+    k.fixed(),
   ]);
 
   function increaseScore(increment = 1) {
@@ -61,8 +79,16 @@ export default async function game({ levelIdx, score }) {
   const player = level.get("player")[0];
   player.pos = level.tile2Pos(0, 0);
   player.onUpdate(() => {
-     k.setCamPos(player.worldPos());
+    k.setCamPos(player.worldPos());
   });
+
+  const ghosty = level.get("ghosty")[0];
+  if (ghosty) {
+    ghosty.waypoints = [
+      k.vec2(ghosty.pos.x - 140, ghosty.pos.y),
+      k.vec2(ghosty.pos.x + 80, ghosty.pos.y),
+    ];
+  }
 
   // Movements
   k.onKeyPress("space", () => {

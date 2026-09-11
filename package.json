@@ -1,6 +1,8 @@
 {
 	"name": "bean-adventures",
 	"type": "module",
+	"version": "1.0.1",
+	"description": "A simple platformer game using kaplay.js",
 	"author": {
 		"name": "Jayesh Choudhary",
 		"email": "jaycp.iitkgp@gmail.com"
