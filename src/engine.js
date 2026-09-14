@@ -3,6 +3,20 @@ import kaplay from "kaplay";
 
 const k = kaplay({
   global: false,
+  buttons: {
+    jump: {
+      keyboard: ["space", "up", "w"],
+      gamepad: ["dpad-up"],
+    },
+    moveLeft: {
+      keyboard: ["left", "a"],
+      gamepad: ["dpad-left"],
+    },
+    moveRight: {
+      keyboard: ["right", "d"],
+      gamepad: ["dpad-right"],
+    },
+  },
 });
 // debug.inspect = true;
 

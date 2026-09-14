@@ -54,7 +54,7 @@ export default async function game({ levelIdx, score }) {
     k.fixed(),
   ]);
 
-  let maxScore = k.getData("maxScore", 0);
+  let maxScore = k.getData("maxScore", 0) || 0;
   const maxScoreLabel = k.add([
     k.text(`Max Score: ${maxScore}`, { size: 18 }),
     k.pos(50, 100),
@@ -98,18 +98,18 @@ export default async function game({ levelIdx, score }) {
   }
 
   // Movements
-  k.onKeyPress("space", () => {
-    if (player.isGrounded()) {
-      player.jump(800);
-    }
-  });
-
-  k.onKeyDown("left", () => {
+  k.onButtonDown("moveLeft", () => {
     player.move(-SPEED, 0);
   });
 
-  k.onKeyDown("right", () => {
+  k.onButtonDown("moveRight", () => {
     player.move(SPEED, 0);
+  });
+
+  k.onButtonDown("jump", () => {
+    if (player.isGrounded()) {
+      player.jump(800);
+    }
   });
 
   player.onCollide("danger", () => {
