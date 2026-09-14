@@ -2,6 +2,9 @@
 
 https://kaplayjs.com/
 
+[Play this Game on Itch.io](https://jayeshcp.itch.io/bean-adventures)
+
+
 ## Folder structure
 
 - `src` - source code for your kaplay project
