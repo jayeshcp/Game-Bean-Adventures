@@ -8,7 +8,7 @@ export default async function splash() {
     k.pos(200, 200),
     k.color(120, 120, 40),
     k.layer("ui"),
-    k.scale(1)
+    k.scale(1),
   ]);
 
   k.add([
@@ -16,7 +16,7 @@ export default async function splash() {
     k.pos(200, 300),
     k.color(80, 80, 80),
     k.layer("ui"),
-    k.scale(1)
+    k.scale(1),
   ]);
 
   async function goToGame() {

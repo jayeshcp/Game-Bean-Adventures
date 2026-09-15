@@ -5,6 +5,25 @@ k.setGravity(2400);
 
 const SPEED = 480;
 
+function ghostPatrol(speed = 120, dir = 1) {
+  return {
+    id: "patrol",
+    require: ["pos", "area"],
+    add() {
+      this.on("collide", (obj, col) => {
+        if (col.isLeft()) {
+          dir = 1;
+        } else if (col.isRight()) {
+          dir = -1;
+        }
+      });
+    },
+    update() {
+      this.move(speed * dir, 0);
+    },
+  };
+}
+
 export default async function game({ levelIdx, score }) {
   k.setBackground("#2E8BC0");
 
@@ -26,13 +45,9 @@ export default async function game({ levelIdx, score }) {
         k.scale(0.8),
         k.area(),
         k.body({ isStatic: true }),
-        k.patrol({
-          speed: 120,
-          endBehavior: "loop",
-        }),
+        ghostPatrol(),
         k.anchor("bot"),
         "danger",
-        "ghosty",
       ],
       "=": () => [
         k.sprite("grass"),
@@ -81,21 +96,6 @@ export default async function game({ levelIdx, score }) {
   player.onUpdate(() => {
     k.setCamPos(player.worldPos());
   });
-
-  const ghosty = level.get("ghosty")[0];
-  if (ghosty) {
-    if (levelIdx != 3) {
-      ghosty.waypoints = [
-        k.vec2(ghosty.pos.x - 140, ghosty.pos.y),
-        k.vec2(ghosty.pos.x + 80, ghosty.pos.y),
-      ];
-    } else {
-      ghosty.waypoints = [
-        k.vec2(ghosty.pos.x - 240, ghosty.pos.y),
-        k.vec2(ghosty.pos.x + 10, ghosty.pos.y),
-      ];
-    }
-  }
 
   // Movements
   k.onButtonDown("moveLeft", () => {
