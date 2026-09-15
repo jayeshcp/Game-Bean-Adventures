@@ -49,7 +49,6 @@ export default async function game({ levelIdx, score }) {
         k.body({ isStatic: true }),
         ghostPatrol(),
         k.anchor("bot"),
-        "danger",
         "enemy",
       ],
       "=": () => [
@@ -142,11 +141,17 @@ export default async function game({ levelIdx, score }) {
     k.setFullscreen(!k.isFullscreen());
   });
 
-  player.onCollide("danger", (e, otherObject) => {
+  player.onCollide("danger", () => {
+    k.play("hit");
+    // Go to "lose" scene when we hit a "danger"
+    k.go("lose");
+  });
+
+  player.onCollide("enemy", (e, otherObject) => {
     // if it is not from the top, die
     if (!otherObject?.isBottom()) {
       k.play("hit");
-      // Go to "lose" scene when we hit a "danger"
+      // Go to "lose" scene when we hit a "enemy"
       k.go("lose");
     }
   });
