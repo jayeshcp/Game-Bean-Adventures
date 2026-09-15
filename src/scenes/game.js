@@ -3,8 +3,6 @@ import { LEVELS } from "./LEVELS.js";
 
 k.setGravity(2400);
 
-const SPEED = 480;
-
 function ghostPatrol(speed = 120, dir = 1) {
   return {
     id: "patrol",
@@ -40,6 +38,7 @@ export default async function game({ levelIdx, score }) {
         k.anchor("bot"),
         "player",
         {
+          MOVE_SPEED: 480,
           JUMP_FORCE: 800,
         },
       ],
@@ -115,12 +114,12 @@ export default async function game({ levelIdx, score }) {
   // Movements
   k.onButtonDown("moveLeft", () => {
     player.flipX = true;
-    player.move(-SPEED, 0);
+    player.move(-player.MOVE_SPEED, 0);
   });
 
   k.onButtonDown("moveRight", () => {
     player.flipX = false;
-    player.move(SPEED, 0);
+    player.move(player.MOVE_SPEED, 0);
   });
 
   k.onButtonDown("jump", () => {
