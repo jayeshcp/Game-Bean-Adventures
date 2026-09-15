@@ -16,6 +16,7 @@ k.loadSound("score", "/sounds/score.mp3");
 k.loadSound("portal", "/sounds/portal.mp3");
 k.loadSound("hit", "/sounds/hit.mp3");
 k.loadSound("bell", "/sounds/bell.mp3");
+k.loadSound("powerup", "/sounds/powerup.mp3");
 
 k.scene("splash", splash);
 k.scene("game", game);

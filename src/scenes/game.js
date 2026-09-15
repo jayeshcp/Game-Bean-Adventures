@@ -50,6 +50,7 @@ export default async function game({ levelIdx, score }) {
         ghostPatrol(),
         k.anchor("bot"),
         "danger",
+        "enemy",
       ],
       "=": () => [
         k.sprite("grass"),
@@ -111,6 +112,15 @@ export default async function game({ levelIdx, score }) {
     k.setCamPos(player.worldPos());
   });
 
+  player.onGround((objectBelow) => {
+    if (objectBelow.is("enemy")) {
+      player.jump(player.JUMP_FORCE * 1.5);
+      k.destroy(objectBelow);
+      k.addKaboom(player.pos);
+      k.play("powerup");
+    }
+  });
+
   // Movements
   k.onButtonDown("moveLeft", () => {
     player.flipX = true;
@@ -132,10 +142,13 @@ export default async function game({ levelIdx, score }) {
     k.setFullscreen(!k.isFullscreen());
   });
 
-  player.onCollide("danger", () => {
-    k.play("hit");
-    // Go to "lose" scene when we hit a "danger"
-    k.go("lose");
+  player.onCollide("danger", (e, otherObject) => {
+    // if it is not from the top, die
+    if (!otherObject?.isBottom()) {
+      k.play("hit");
+      // Go to "lose" scene when we hit a "danger"
+      k.go("lose");
+    }
   });
 
   player.onCollide("coin", (coin) => {
