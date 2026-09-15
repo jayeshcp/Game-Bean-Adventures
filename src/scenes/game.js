@@ -114,10 +114,12 @@ export default async function game({ levelIdx, score }) {
 
   // Movements
   k.onButtonDown("moveLeft", () => {
+    player.flipX = true;
     player.move(-SPEED, 0);
   });
 
   k.onButtonDown("moveRight", () => {
+    player.flipX = false;
     player.move(SPEED, 0);
   });
 
