@@ -39,6 +39,9 @@ export default async function game({ levelIdx, score }) {
         k.body(),
         k.anchor("bot"),
         "player",
+        {
+          JUMP_FORCE: 800,
+        },
       ],
       "#": () => [
         k.sprite("ghosty"),
@@ -54,6 +57,7 @@ export default async function game({ levelIdx, score }) {
         k.area(),
         k.body({ isStatic: true }),
         k.anchor("bot"),
+        "platform",
       ],
       $: () => [k.sprite("coin"), k.area(), k.anchor("bot"), "coin"],
       "^": () => [k.sprite("spike"), k.area(), k.anchor("bot"), "danger"],
@@ -97,6 +101,17 @@ export default async function game({ levelIdx, score }) {
     k.setCamPos(player.worldPos());
   });
 
+  player.onBeforePhysicsResolve((collision) => {
+    if (collision.target.is(["platform", "soft"]) && player.isJumping()) {
+      collision.preventResolution();
+    }
+  });
+
+  player.onPhysicsResolve(() => {
+    // Set the viewport center to player.pos
+    k.setCamPos(player.worldPos());
+  });
+
   // Movements
   k.onButtonDown("moveLeft", () => {
     player.move(-SPEED, 0);
@@ -108,7 +123,7 @@ export default async function game({ levelIdx, score }) {
 
   k.onButtonDown("jump", () => {
     if (player.isGrounded()) {
-      player.jump(800);
+      player.jump(player.JUMP_FORCE);
     }
   });
 
