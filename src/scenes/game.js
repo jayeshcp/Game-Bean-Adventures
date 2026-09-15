@@ -112,6 +112,10 @@ export default async function game({ levelIdx, score }) {
     }
   });
 
+  k.onKeyPress("f", () => {
+    k.setFullscreen(!k.isFullscreen());
+  });
+
   player.onCollide("danger", () => {
     k.play("hit");
     // Go to "lose" scene when we hit a "danger"
