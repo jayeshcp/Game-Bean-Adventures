@@ -2,8 +2,7 @@
 
 https://kaplayjs.com/
 
-[Play this Game on Itch.io](https://jayeshcp.itch.io/bean-adventures)
-
+<a href="https://jayeshcp.itch.io/bean-adventures"><img src="./promo/itchio.png"></img></a>
 
 ## Folder structure
 
