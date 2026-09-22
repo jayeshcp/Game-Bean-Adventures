@@ -1,10 +1,11 @@
 import k from "../engine.js";
+import { GAME_TITLE } from "../constants.js";
 
 export default async function splash() {
   k.setBackground("#FADCD9");
 
   k.add([
-    k.text("Bean Adventures", { size: 48, align: "center" }),
+    k.text(GAME_TITLE, { size: 48, align: "center" }),
     k.pos(200, 200),
     k.color(120, 120, 40),
     k.layer("ui"),

@@ -1,36 +1,26 @@
 import k from "../engine.js";
 import { GAME_OBJECTS, LEVELS } from "./LEVELS.js";
-import { FALL_DATH_THRESHOLD, GRAVITY } from "../constants.js";
+import {
+  FALL_DATH_THRESHOLD,
+  GRAVITY,
+  LEVELS_BACKGROUND_COLOR,
+  PLAYER_JUMP_FORCE,
+  PLAYER_MOVE_SPEED,
+  TILE_HEIGHT,
+  TILE_WIDTH,
+} from "../constants.js";
+import { ghostPatrol } from "../utils.js";
 
 k.setGravity(GRAVITY);
 
-function ghostPatrol(speed = 120, dir = 1) {
-  return {
-    id: "patrol",
-    require: ["pos", "area"],
-    add() {
-      this.on("collide", (obj, col) => {
-        if (col.isLeft()) {
-          dir = 1;
-        } else if (col.isRight()) {
-          dir = -1;
-        }
-      });
-    },
-    update() {
-      this.move(speed * dir, 0);
-    },
-  };
-}
-
 export default async function game({ levelIdx, score }) {
-  k.setBackground("#2E8BC0");
+  k.setBackground(LEVELS_BACKGROUND_COLOR);
   const levelStartScore = score; // snapshot value of score to use when restarting level after lose
 
   // Use the level passed, or first level
   const level = k.addLevel(LEVELS[levelIdx || 0], {
-    tileWidth: 64,
-    tileHeight: 64,
+    tileWidth: TILE_WIDTH,
+    tileHeight: TILE_HEIGHT,
     pos: k.vec2(100, 200),
     tiles: {
       [GAME_OBJECTS.PLAYER]: () => [
@@ -40,8 +30,8 @@ export default async function game({ levelIdx, score }) {
         k.anchor("bot"),
         "player",
         {
-          MOVE_SPEED: 480,
-          JUMP_FORCE: 800,
+          MOVE_SPEED: PLAYER_MOVE_SPEED,
+          JUMP_FORCE: PLAYER_JUMP_FORCE,
         },
       ],
       [GAME_OBJECTS.GHOSTY]: () => [
