@@ -1,7 +1,8 @@
 import k from "../engine.js";
-import { LEVELS } from "./LEVELS.js";
+import { GAME_OBJECTS, LEVELS } from "./LEVELS.js";
+import { FALL_DATH_THRESHOLD, GRAVITY } from "../constants.js";
 
-k.setGravity(2400);
+k.setGravity(GRAVITY);
 
 function ghostPatrol(speed = 120, dir = 1) {
   return {
@@ -32,7 +33,7 @@ export default async function game({ levelIdx, score }) {
     tileHeight: 64,
     pos: k.vec2(100, 200),
     tiles: {
-      "@": () => [
+      [GAME_OBJECTS.PLAYER]: () => [
         k.sprite("bean"),
         k.area(),
         k.body(),
@@ -43,7 +44,7 @@ export default async function game({ levelIdx, score }) {
           JUMP_FORCE: 800,
         },
       ],
-      "#": () => [
+      [GAME_OBJECTS.GHOSTY]: () => [
         k.sprite("ghosty"),
         k.scale(0.8),
         k.area(),
@@ -52,16 +53,31 @@ export default async function game({ levelIdx, score }) {
         k.anchor("bot"),
         "enemy",
       ],
-      "=": () => [
+      [GAME_OBJECTS.PLATFORM]: () => [
         k.sprite("grass"),
         k.area(),
         k.body({ isStatic: true }),
         k.anchor("bot"),
         "platform",
       ],
-      $: () => [k.sprite("coin"), k.area(), k.anchor("bot"), "coin"],
-      "^": () => [k.sprite("spike"), k.area(), k.anchor("bot"), "danger"],
-      ">": () => [k.sprite("portal"), k.area(), k.anchor("bot"), "portal"],
+      [GAME_OBJECTS.COIN]: () => [
+        k.sprite("coin"),
+        k.area(),
+        k.anchor("bot"),
+        "coin",
+      ],
+      [GAME_OBJECTS.SPIKE]: () => [
+        k.sprite("spike"),
+        k.area(),
+        k.anchor("bot"),
+        "danger",
+      ],
+      [GAME_OBJECTS.PORTAL]: () => [
+        k.sprite("portal"),
+        k.area(),
+        k.anchor("bot"),
+        "portal",
+      ],
     },
   });
 
@@ -160,7 +176,7 @@ export default async function game({ levelIdx, score }) {
 
   // Fall death
   player.onUpdate(() => {
-    if (player.pos.y >= 2000) {
+    if (player.pos.y >= FALL_DATH_THRESHOLD) {
       k.play("hit");
       k.go("lose", { levelIdx, levelStartScore });
     }

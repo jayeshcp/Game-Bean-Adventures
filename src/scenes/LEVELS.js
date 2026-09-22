@@ -1,4 +1,13 @@
 // Design levels
+export const GAME_OBJECTS = {
+  PLAYER: "@",
+  GHOSTY: "#",
+  SPIKE: "^",
+  COIN: "$",
+  PLATFORM: "=",
+  PORTAL: ">",
+};
+
 export const LEVELS = [
   [
     "@     $ $    $  $     $$     $",
