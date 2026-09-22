@@ -1,6 +1,6 @@
 import k from "../engine.js";
 
-export default async function lose() {
+export default async function lose({ levelIdx }) {
   gtag("event", "lose", {
     event_category: "game",
     event_label: "lose",
@@ -13,8 +13,8 @@ export default async function lose() {
   // Press any key to go back
   k.onKeyPress(() => {
     k.go("game", {
-        levelIdx: 0,
-        score: 0,
+      levelIdx,
+      score: 0,
     });
   });
 }

@@ -144,7 +144,7 @@ export default async function game({ levelIdx, score }) {
   player.onCollide("danger", () => {
     k.play("hit");
     // Go to "lose" scene when we hit a "danger"
-    k.go("lose");
+    k.go("lose", { levelIdx });
   });
 
   player.onCollide("enemy", (e, otherObject) => {
@@ -152,7 +152,7 @@ export default async function game({ levelIdx, score }) {
     if (!otherObject?.isBottom()) {
       k.play("hit");
       // Go to "lose" scene when we hit a "enemy"
-      k.go("lose");
+      k.go("lose", { levelIdx });
     }
   });
 
@@ -166,7 +166,7 @@ export default async function game({ levelIdx, score }) {
   player.onUpdate(() => {
     if (player.pos.y >= 2000) {
       k.play("hit");
-      k.go("lose");
+      k.go("lose", { levelIdx });
     }
   });
 
