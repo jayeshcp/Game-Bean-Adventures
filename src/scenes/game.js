@@ -1,6 +1,7 @@
 import k from "../engine.js";
 import { GAME_OBJECTS, LEVELS } from "./LEVELS.js";
 import {
+  CAM_LERP_SPEED,
   FALL_DATH_THRESHOLD,
   GRAVITY,
   LEVELS_BACKGROUND_COLOR,
@@ -103,8 +104,15 @@ export default async function game({ levelIdx, score }) {
   // Get the player object from tag
   const player = level.get("player")[0];
   player.pos = level.tile2Pos(0, 0);
+
+  // start camera right on the player so it doesn't glide in
+  // from the origin on level load
+  let camPos = player.worldPos();
+  k.setCamPos(camPos);
+
   player.onUpdate(() => {
-    k.setCamPos(player.worldPos());
+    camPos = camPos.lerp(player.worldPos(), CAM_LERP_SPEED);
+    k.setCamPos(camPos);
   });
 
   player.onBeforePhysicsResolve((collision) => {

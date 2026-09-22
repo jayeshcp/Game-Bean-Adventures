@@ -6,3 +6,6 @@ export const TILE_WIDTH = 64;
 export const TILE_HEIGHT = 64;
 export const PLAYER_MOVE_SPEED = 480;
 export const PLAYER_JUMP_FORCE = 800;
+// How quickly the camera catches up to the player each frame.
+// 0 = camera never moves, 1 = instant snap (no smoothing).
+export const CAM_LERP_SPEED = 0.08;
