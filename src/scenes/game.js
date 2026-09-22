@@ -131,17 +131,17 @@ export default async function game({ levelIdx, score }) {
   });
 
   // Movements
-  k.onButtonDown("moveLeft", () => {
+  player.onButtonDown("moveLeft", () => {
     player.flipX = true;
     player.move(-player.MOVE_SPEED, 0);
   });
 
-  k.onButtonDown("moveRight", () => {
+  player.onButtonDown("moveRight", () => {
     player.flipX = false;
     player.move(player.MOVE_SPEED, 0);
   });
 
-  k.onButtonDown("jump", () => {
+  player.onButtonDown("jump", () => {
     if (player.isGrounded()) {
       player.jump(player.JUMP_FORCE);
     }
