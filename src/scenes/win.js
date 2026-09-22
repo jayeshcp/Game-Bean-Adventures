@@ -1,11 +1,8 @@
 import k from "../engine.js";
+import { trackWin } from "../analytics.js";
 
 export default async function win({ score }) {
-  gtag("event", "win", {
-    event_category: "game",
-    event_label: "win",
-    value: score,
-  });
+  trackWin(score);
 
   k.setBackground([40, 60, 40]);
   k.add([
@@ -26,8 +23,8 @@ export default async function win({ score }) {
 
   k.onKeyPress(() => {
     k.go("game", {
-        levelIdx: 0,
-        score: 0,
+      levelIdx: 0,
+      score: 0,
     });
   });
 }

@@ -1,10 +1,8 @@
 import k from "../engine.js";
+import { trackLose } from "../analytics.js";
 
 export default async function lose({ levelIdx, levelStartScore }) {
-  gtag("event", "lose", {
-    event_category: "game",
-    event_label: "lose",
-  });
+  trackLose();
 
   k.setBackground([90, 40, 40]);
 
