@@ -11,8 +11,10 @@ import {
   TILE_WIDTH,
 } from "../constants.js";
 import { ghostPatrol } from "../utils.js";
+import RetroAudio from "../retro_audio.js";
 
 k.setGravity(GRAVITY);
+const audio = new RetroAudio();
 
 export default async function game({ levelIdx, score }) {
   k.setBackground(LEVELS_BACKGROUND_COLOR);
@@ -126,7 +128,7 @@ export default async function game({ levelIdx, score }) {
       player.jump(player.JUMP_FORCE * 1.5);
       k.destroy(objectBelow);
       k.addKaboom(player.pos);
-      k.play("powerup");
+      audio.playStomp();
     }
   });
 
@@ -152,7 +154,7 @@ export default async function game({ levelIdx, score }) {
   });
 
   player.onCollide("danger", () => {
-    k.play("hit");
+    audio.playHurt();
     // Go to "lose" scene when we hit a "danger"
     k.go("lose", { levelIdx, levelStartScore });
   });
@@ -160,7 +162,7 @@ export default async function game({ levelIdx, score }) {
   player.onCollide("enemy", (e, otherObject) => {
     // if it is not from the top, die
     if (!otherObject?.isBottom()) {
-      k.play("hit");
+      audio.playHurt();
       // Go to "lose" scene when we hit a "enemy"
       k.go("lose", { levelIdx, levelStartScore });
     }
@@ -168,21 +170,33 @@ export default async function game({ levelIdx, score }) {
 
   player.onCollide("coin", (coin) => {
     k.destroy(coin);
-    k.play("score");
+    audio.playCoin();
     increaseScore();
+
+    // Particle Burst on Collect
+    for (let i = 0; i < 8; i++) {
+      k.add([
+        k.circle(k.rand(2, 4)),
+        k.pos(k.vec2(coin.pos.x + 100, coin.pos.y + 180)),
+        k.color(251, 191, 36),
+        k.move(k.rand(0, 360), k.rand(60, 150)),
+        k.opacity(1),
+        k.lifespan(0.3, { fade: 0.2 }),
+      ]);
+    }
   });
 
   // Fall death
   player.onUpdate(() => {
     if (player.pos.y >= FALL_DATH_THRESHOLD) {
-      k.play("hit");
+      audio.playHurt();
       k.go("lose", { levelIdx, levelStartScore });
     }
   });
 
   // Enter the next level on portal
   player.onCollide("portal", () => {
-    k.play("bell");
+    audio.playVictory();
     if (levelIdx < LEVELS.length - 1) {
       // If there's a next level, go() to the same scene but load the next level
       k.go("game", {
