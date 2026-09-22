@@ -3,6 +3,7 @@ Todo:
   ✔ Improve ghosty patrol @done(26-09-14 21:09)
   ✔ Add flipX on left right turn of bean @done(26-09-14 21:55)
   ✔ Kill ghost by jumping on top of it @done(26-09-14 21:57)
+  ✔ Restart level after losing instead of restarting from first level @done(26-09-22 09:15)
   ☐ Create nice splash screen with image(s) or animations and nice font
   ☐ Create nice win screen
   ☐ Create nice lose screen

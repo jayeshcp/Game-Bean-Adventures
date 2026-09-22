@@ -24,6 +24,7 @@ function ghostPatrol(speed = 120, dir = 1) {
 
 export default async function game({ levelIdx, score }) {
   k.setBackground("#2E8BC0");
+  const levelStartScore = score; // snapshot value of score to use when restarting level after lose
 
   // Use the level passed, or first level
   const level = k.addLevel(LEVELS[levelIdx || 0], {
@@ -106,11 +107,6 @@ export default async function game({ levelIdx, score }) {
     }
   });
 
-  player.onPhysicsResolve(() => {
-    // Set the viewport center to player.pos
-    k.setCamPos(player.worldPos());
-  });
-
   player.onGround((objectBelow) => {
     if (objectBelow.is("enemy")) {
       player.jump(player.JUMP_FORCE * 1.5);
@@ -144,7 +140,7 @@ export default async function game({ levelIdx, score }) {
   player.onCollide("danger", () => {
     k.play("hit");
     // Go to "lose" scene when we hit a "danger"
-    k.go("lose", { levelIdx });
+    k.go("lose", { levelIdx, levelStartScore });
   });
 
   player.onCollide("enemy", (e, otherObject) => {
@@ -152,7 +148,7 @@ export default async function game({ levelIdx, score }) {
     if (!otherObject?.isBottom()) {
       k.play("hit");
       // Go to "lose" scene when we hit a "enemy"
-      k.go("lose", { levelIdx });
+      k.go("lose", { levelIdx, levelStartScore });
     }
   });
 
@@ -166,7 +162,7 @@ export default async function game({ levelIdx, score }) {
   player.onUpdate(() => {
     if (player.pos.y >= 2000) {
       k.play("hit");
-      k.go("lose", { levelIdx });
+      k.go("lose", { levelIdx, levelStartScore });
     }
   });
 
@@ -177,7 +173,7 @@ export default async function game({ levelIdx, score }) {
       // If there's a next level, go() to the same scene but load the next level
       k.go("game", {
         levelIdx: levelIdx + 1,
-        score: score,
+        score,
       });
     } else {
       // Otherwise we have reached the end of game, go to "win" scene!

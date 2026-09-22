@@ -1,6 +1,6 @@
 import k from "../engine.js";
 
-export default async function lose({ levelIdx }) {
+export default async function lose({ levelIdx, levelStartScore }) {
   gtag("event", "lose", {
     event_category: "game",
     event_label: "lose",
@@ -14,7 +14,7 @@ export default async function lose({ levelIdx }) {
   k.onKeyPress(() => {
     k.go("game", {
       levelIdx,
-      score: 0,
+      score: levelStartScore,
     });
   });
 }
